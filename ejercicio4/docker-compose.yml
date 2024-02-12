@@ -1,0 +1,36 @@
+services:
+  mi-mysql:
+    container_name: mi-mysql
+    image: mysql:latest
+    stdin_open: true
+    tty: true
+    volumes:
+      - mi-mysql-vol:/var/lib/mysql
+    networks:
+      mi-mysql-red:
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+  mi-dashboard:
+    container_name: mi-dashboard
+    image: phpmyadmin:latest
+    stdin_open: true
+    tty: true
+    networks:
+      mi-mysql-red:
+    environment:
+      - PMA_HOST=mi-mysql
+    ports:
+      - 8080:80
+
+
+
+volumes:
+  mi-mysql-vol:
+
+networks:
+  mi-mysql-red:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
