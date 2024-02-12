@@ -1,30 +1,32 @@
 services:
   mi-mongo:
-    container_name: mi-mongo
-    image: mongo:latest
-    stdin_open: true
-    tty: true
+    container_name: mi-mongo #Nombre de la mauqina
+    image: mongo:latest # Establezco la imagen de mongo mas actualizada
+    stdin_open: true # Permite input a el contenedor (como poner -i de -it)
+    tty: true # Permite el uso de una consola (como poner -t de -it)
     volumes:
-      - mi-vol:/data/db
+      - mi-vol:/data/db # Establezco el volumen y lo mapeo en /data/db que es donde se guardan los datos de mongodb
     networks:
-      mi-red:
+      mi-red: # Lo conecto a la red creada en este mismo archivo
 
   mi-mongo-express:
-    container_name: mi-mongo-express
-    image: mongo-express:latest
-    stdin_open: true
-    tty: true
+    container_name: mi-mongo-express # Nombre de ls maquina
+    image: mongo-express:latest # Ultima version de la imagen mongo-express
+    stdin_open: true # -i
+    tty: true # -t
     networks:
-      mi-red:
-    environment:
+      mi-red: # Conecto a la misma red que mi-mongo
+    environment: # Variable de entorno para definir el server de bdd que en este caso es el cintenedor mi-mongo
       - ME_CONFIG_MONGODB_SERVER=mi-mongo
-    ports:
+    ports: # Conecto el puerto 80 (del server) a el 8081 (del container) que es el default de mongo-express
       - 80:8081
 
 
 
+# El volumen y la red
 volumes:
   mi-vol:
+
 
 networks:
   mi-red:

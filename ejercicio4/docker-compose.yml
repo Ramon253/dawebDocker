@@ -1,36 +1,37 @@
 services:
   mi-mysql:
-    container_name: mi-mysql
-    image: mysql:latest
-    stdin_open: true
-    tty: true
-    volumes:
+    container_name: mi-mysql # Nombre del container
+    image: mysql:latest # Ultima version de la imagen de mysql
+    # -it
+    stdin_open: true # -i
+    tty: true # -t
+    volumes: # Mappeo el volumen a /var/lib/mysql que es el dir default de datos de mysql
       - mi-mysql-vol:/var/lib/mysql
-    networks:
+    networks: # Conecto a la red creada en este mismo archivo
       mi-mysql-red:
-    environment:
+    environment: #Variable de entorno para establecer la contraseña de root user
       - MYSQL_ROOT_PASSWORD=root
 
   mi-dashboard:
     container_name: mi-dashboard
-    image: phpmyadmin:latest
-    stdin_open: true
-    tty: true
-    networks:
+    image: phpmyadmin:latest #Ultima version de phpmyadmin
+    stdin_open: true # -i
+    tty: true # -t
+    networks: # Conecto a la misma red que mi-mysql
       mi-mysql-red:
-    environment:
+    environment: #Variable de entorno para definir el host de bdd, en este caso mi-mysql
       - PMA_HOST=mi-mysql
-    ports:
+    ports: # Conecto el puerto 8080(del server) a el 80 de el contenedor (Default de phpmyadmin)
       - 8080:80
 
 
-
+# Volumen y network
 volumes:
   mi-mysql-vol:
 
 networks:
-  mi-mysql-red:
-    ipam:
-      driver: default
-      config:
+  mi-mysql-red: # Nombre de la red
+    ipam: #configiracion de la red
+      driver: default # driver default que es = bridge
+      config: # Configuracion y establezco subred de la red
         - subnet: 172.25.0.0/16
