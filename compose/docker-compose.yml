@@ -1,0 +1,35 @@
+# Volumen
+# red subnet 172.100.0.0/16
+# Contenedor ubuntu:22.04
+# IP 172.100.0.10
+# mapee el port 8080 --> 80 de dentro
+# volumen en la carpeta /app/data
+# nombre mi-daw
+
+services:
+  mi-daw:
+    container_name: mi-daw  # --name
+    build: # docker bui ld -t image-daw-12
+      context: ./
+    image: image-daw-12
+    stdin_open: true # -i
+    tty: true   # -t
+    networks:
+      mi-red: # --net
+        ipv4_address: 172.100.0.10 # --ip
+    volumes:
+      - mi-volumen:/app/data:rw # --mount  :rw es read and wirte (que es el default) y si no :ro (read only)
+    ports:
+      - 8080:80 # -p
+
+
+networks:
+  mi-red:
+    ipam: # conf de la red
+      driver: default # Bridge
+      config:
+        - subnet: 172.100.0.0/16
+
+volumes:
+  mi-volumen:
+
