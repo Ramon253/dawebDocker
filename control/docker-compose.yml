@@ -17,8 +17,6 @@ services:
     image: mi-node-app
     stdin_open: true # -i
     tty: true   # -t
-
-
     networks:
       mongo-node-net:
         ipv4_address: 172.40.0.11  # --net
@@ -33,9 +31,8 @@ services:
     networks:
       node-nginx-net:
         ipv4_address: 172.80.0.11
-    environment:
-      - NGINX_HOST=172.80.0.10
-      - NGINX_PORT=80
+    depends_on:
+       - mi-node
     ports:
       - 80:80
 
