@@ -17,7 +17,7 @@ services:
     image: mi-node-app
     stdin_open: true # -i
     tty: true   # -t
-    environment:
+
 
     networks:
       mongo-node-net:
