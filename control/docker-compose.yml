@@ -17,8 +17,8 @@ services:
     image: mi-node-app
     stdin_open: true # -i
     tty: true   # -t
-
-
+    expose:
+      - 8080
     networks:
       mongo-node-net:
         ipv4_address: 172.40.0.11  # --net
