@@ -1,0 +1,26 @@
+services:
+  mi-node-ej1:
+    container_name: mi-node-ej1  # --name
+    build: # docker bui ld -t image-daw-12
+      context: ./
+    image: mi-node-app
+    stdin_open: true # -i
+    tty: true   # -t
+    expose:
+      - 8080
+    networks:
+      red-nodejs:
+        ipv4_address: 172.30.0.10  # --net
+
+
+
+volumes:
+  mongo-vol:
+
+networks:
+  red-nodejs:
+    ipam: # conf de la red
+      driver: default # Bridge
+      config:
+        - subnet: 172.30.0.0/16
+
