@@ -6,8 +6,7 @@ services:
     image: mi-node-app
     stdin_open: true # -i
     tty: true   # -t
-    expose:
-      - 8080
+
     networks:
       red-nodejs:
         ipv4_address: 172.30.0.10  # --net
